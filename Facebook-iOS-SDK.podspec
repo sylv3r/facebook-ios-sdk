@@ -31,9 +31,21 @@ Pod::Spec.new do |s|
 
   s.subspec 'CoreKit' do |spec|
     spec.source_files   = "FBSDKCoreKit/FBSDKCoreKit/**/*.{h,m}"
-    spec.exclude_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.{h,m}"
+    spec.exclude_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/**/*.{h,m}"
     spec.public_header_files = "FBSDKCoreKit/FBSDKCoreKit/*.{h}"
     spec.header_dir = "FBSDKCoreKit"
+    spec.subspec 'Internal' do |sp|
+      internal_dep = "AppEvents", "AppLink", "Base64", "BridgeAPI", "ProtocolVersions", "Cryptography", "ErrorRecovery", "Network", "ServerConfiguration", "TokenCaching", "UI", "WebDialog"
+      sp.exclude_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.{h,m}"
+      sp.source_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/*.{h,m}"
+      sp.header_dir = "Internal"
+      internal_dep.each do |idep|
+        sp.subspec idep do |idepsp|
+          idepsp.source_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/#{idep}/**/*.{h,m}"
+          idepsp.header_dir = idep
+        end
+      end
+    end
     spec.subspec 'no-arc' do |sp|
       sp.source_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.{h,m}"
       sp.compiler_flags = '-fno-objc-arc'
