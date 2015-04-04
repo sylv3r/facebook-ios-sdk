@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Facebook-iOS-SDK"
-  s.version      = "4.0"
+  s.version      = "4.0.1"
   s.summary      = "Official Facebook SDK for iOS to access Facebook Platform with features like Login, Share and Message Dialog, App Links, and Graph API"
 
   s.description  = <<-DESC
@@ -14,13 +14,13 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "https://developers.facebook.com/docs/ios/"
-  s.license      = { :file => "LICENSE" }
+  s.license      = { :type => "Facebook Platform License", :file => "LICENSE" }
   s.author       = 'Facebook'
 
   s.platform     = :ios, "7.0"
 
   s.source       = { :git => "https://github.com/facebook/facebook-ios-sdk.git",
-                     :tag => "sdk-version-4.0"
+                     :tag => "sdk-version-4.0.1"
                     }
 
   s.weak_frameworks = "Accounts", "CoreLocation", "Social", "Security", "QuartzCore", "CoreGraphics", "UIKit", "Foundation", "AudioToolbox"
@@ -47,8 +47,8 @@ Pod::Spec.new do |s|
       end
     end
     spec.subspec 'no-arc' do |sp|
-      sp.source_files = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.{h,m}"
-      sp.compiler_flags = '-fno-objc-arc'
+      sp.source_files = "FBSDKCoreKit/FBSDKCoreKit/**/*.h","FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDynamicFrameworkLoader.{h,m}"
+      sp.requires_arc = false
     end
   end
   s.subspec 'LoginKit' do |spec|
